@@ -2,7 +2,6 @@
  * 网络请求配置
  */
 import axios from 'axios'
-
 axios.defaults.timeout = 100000
 
 /**

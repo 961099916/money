@@ -89,7 +89,7 @@ export function Index() {
             }}
           />
         </Sider>
-        <Content style={{ backgroundColor: 'var(--semi-color-bg-1)', height: '100%' }}>
+        <Content style={{ backgroundColor: 'var(--semi-color-bg-1)', height: '100%'}}>
           <Outlet></Outlet>
         </Content>
       </Layout>

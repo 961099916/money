@@ -2,6 +2,9 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import moment from 'moment'
+import Store from 'electron-store'
+const store = new Store()
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -16,7 +19,7 @@ function createWindow(): void {
       nodeIntegrationInWorker: true,
       contextIsolation: false,
       nodeIntegration: true,
-      webSecurity: false,
+      webSecurity: false
     }
   })
 
@@ -52,8 +55,23 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // IPC listener
+  ipcMain.on('electron-store-get', async (event, storeKey) => {
+    if (storeKey) {
+      event.returnValue = store.get(storeKey)
+    } else {
+      const now = moment().format('yyyy-MM-DD')
+      event.returnValue = store.get(now)
+    }
+  })
+  ipcMain.on('electron-store-set', async (event, storeKey, storeValue) => {
+    if (storeKey) {
+      store.set(storeKey, storeValue)
+    } else {
+      const now = moment().format('yyyy-MM-DD')
+      store.set(now, storeValue)
+    }
+  })
 
   createWindow()
 
