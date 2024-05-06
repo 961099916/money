@@ -1,12 +1,12 @@
 import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import { Index } from './components'
+import { Index } from './pages'
 import './App.css'
-import Zt from './components/Zt'
-import Qxzqb from './components/Qxzqb'
-import Bk from './components/Bk'
-import Lhb from './components/Lhb'
-import Ltt from './components/Ltt'
+import Zt from './pages/Zt'
+import Qxzqb from './pages/Qxzqb'
+import Bk from './pages/Bk'
+import Lhb from './pages/Lhb'
+import Ltt from './pages/Ltt'
 export default createBrowserRouter([
   {
     path: '/',

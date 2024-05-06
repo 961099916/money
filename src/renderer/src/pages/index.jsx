@@ -24,18 +24,19 @@ import { Outlet } from 'react-router-dom/dist'
 import Titles from './Titles'
 export function Index() {
   const { Header, Sider, Content } = Layout
+
   return (
-    <Layout style={{ border: '1px solid var(--semi-color-border)', height: '100vh' }}>
+    <Layout style={{ border: '0px solid var(--semi-color-border)', height: '100vh' }}>
       <Header
         style={{
           backgroundColor: 'var(--semi-color-bg-1)',
-          border: '1px solid var(--semi-color-border)',
+          border: '0px solid var(--semi-color-border)',
           height: '10vh'
         }}
       >
         <Titles></Titles>
       </Header>
-      <Layout style={{ height: '90vh' }}>
+      <Layout style={{ maxheight: '90vh' }}>
         <Sider
           style={{
             backgroundColor: 'var(--semi-color-bg-1)',

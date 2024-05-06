@@ -3,31 +3,24 @@ import { Col, Row, Table, Button, DatePicker } from '@douyinfe/semi-ui'
 import { IconRefresh } from '@douyinfe/semi-icons'
 import axios from 'axios'
 import moment from 'moment'
+import api from '../api/api'
 export default function Zt() {
   const [value, setValue] = useState([])
   const [time, setTime] = useState()
   useEffect(() => {
     const now = moment().format('yyyy-MM-DD')
     setTime(now)
-    axios
-      .get('https://flash-api.xuangubao.cn/api/pool/detail?pool_name=limit_up&date=' + now)
-        .then((res) => {
-            if (res.data.data) {
-                setValue(res.data.data)
-            }
-        })
+    refresh()
   }, [])
   function onChangeTime(date, dateString) {
     setTime(dateString)
   }
   function refresh() {
-    axios
-      .get('https://flash-api.xuangubao.cn/api/pool/detail?pool_name=limit_up&date=' + time)
-        .then((res) => {
-            if (res.data.data) {
-              setValue(res.data.data)
-            }
-        })
+      api.Xgb.jrzt(time).then((res) => {
+        if (res.data) {
+          setValue(res.data)
+        }
+      })
   }
   const columns = [
     {
