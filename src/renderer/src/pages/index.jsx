@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react'
-import { VChart } from '@visactor/react-vchart'
 import { Layout, Nav } from '@douyinfe/semi-ui'
 import {
   IconBytedanceLogo,
@@ -11,7 +10,7 @@ import {
 } from '@douyinfe/semi-icons'
 import { Link } from 'react-router-dom'
 import { Outlet } from 'react-router-dom/dist'
-import Titles from './Titles'
+import Titles from './analyse/Analyse'
 export function Index() {
   const { Header, Sider, Content } = Layout
 

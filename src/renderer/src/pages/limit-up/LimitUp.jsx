@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Col, Row, Table, Button, DatePicker, Tag, Popover, Badge } from '@douyinfe/semi-ui'
 import { IconRefresh, IconChevronLeft, IconChevronRight } from '@douyinfe/semi-icons'
-import COLOR from '../constant/ZtConstant'
+import LIMIT_UP_COLOR from '../../constants/constant'
 import moment from 'moment'
-import api from '../api/api'
-export default function Zt() {
+import api from '../../hook/api'
+export default function LimitUp() {
   const [value, setValue] = useState([])
   const [time, setTime] = useState(moment().format('yyyy-MM-DD'))
   useEffect(() => {
@@ -15,19 +15,14 @@ export default function Zt() {
   }
   function refresh(date) {
     date = !date ? time : date
-    let dataStr = window.api.store.get(date)
-    if (dataStr) {
-      setValue(JSON.parse(dataStr))
-    } else {
-      api.Xgb.jrzt(date).then((res) => {
-        if (res.data) {
-          setValue(res.data)
-          window.api.store.set(date, JSON.stringify(res.data))
-        } else {
-          setValue([])
-        }
-      })
-    }
+    api.Xgb.jrzt(date).then((res) => {
+      if (res.data) {
+        setValue(res.data)
+        window.api.store.set(date, JSON.stringify(res.data))
+      } else {
+        setValue([])
+      }
+    })
   }
   function before() {
     let date = moment(time, 'YYYY-MM-DD').subtract(1, 'days')
@@ -106,8 +101,8 @@ export default function Zt() {
             >
               <Badge dot>
                 <Tag
-                  color={COLOR[Number(record.m_days_n_boards_boards)]}
-                  key={COLOR[Number(record.m_days_n_boards_boards)]}
+                  color={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
+                  key={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
                 >
                   {record.surge_reason.related_plates[0].plate_name}
                 </Tag>
@@ -117,8 +112,8 @@ export default function Zt() {
         } else {
           children = (
             <Tag
-              color={COLOR[Number(record.m_days_n_boards_boards)]}
-              key={COLOR[Number(record.m_days_n_boards_boards)]}
+              color={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
+              key={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
             >
               {record.surge_reason.related_plates[0].plate_name}
             </Tag>

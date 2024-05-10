@@ -2,7 +2,6 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import moment from 'moment'
 import sqlite3 from 'sqlite3'
 
 console.log('连接数据库路径：', app.getAppPath(), '/text.db')
@@ -66,24 +65,6 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
-  })
-
-  // IPC listener
-  ipcMain.on('electron-store-get', async (event, storeKey) => {
-    if (storeKey) {
-      event.returnValue = store.get(storeKey)
-    } else {
-      const now = moment().format('yyyy-MM-DD')
-      event.returnValue = store.get(now)
-    }
-  })
-  ipcMain.on('electron-store-set', async (event, storeKey, storeValue) => {
-    if (storeKey) {
-      store.set(storeKey, storeValue)
-    } else {
-      const now = moment().format('yyyy-MM-DD')
-      store.set(now, storeValue)
-    }
   })
 
   createWindow()
