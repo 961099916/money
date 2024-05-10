@@ -11,7 +11,7 @@ import {
 import { Link } from 'react-router-dom'
 import { Outlet } from 'react-router-dom/dist'
 import Titles from './analyse/Analyse'
-export function Index() {
+export default function Index() {
   const { Header, Sider, Content } = Layout
 
   return (
@@ -44,32 +44,32 @@ export function Index() {
             style={{ maxWidth: 220, height: '90vh' }}
             items={[
               {
-                itemKey: 'zt',
+                itemKey: 'limit-up',
                 text: '涨停',
                 icon: <IconMinus size="large" />
               },
               {
-                itemKey: 'fenshi',
-                text: '涨停分时',
+                itemKey: 'time-sharing',
+                text: '分时',
                 icon: <IconMinus size="large" />
               },
               {
-                itemKey: 'bk',
+                itemKey: 'plate-rotation',
                 text: '板块',
                 icon: <IconLayers size="large" />
               },
               {
-                itemKey: 'qxzqb',
+                itemKey: 'emotional',
                 text: '情绪周期表',
                 icon: <IconGridView1 size="large" />
               },
               {
-                itemKey: 'ltt',
+                itemKey: 'dragon-totem',
                 text: '龙图腾',
                 icon: <IconKanban size="large" />
               },
               {
-                itemKey: 'lhb',
+                itemKey: 'winners-list',
                 text: '龙虎榜',
                 icon: <IconListView size="large" />
               }

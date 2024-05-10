@@ -1,20 +1,21 @@
 import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import { Index } from './pages'
 import './App.css'
+import Index from './pages/Index'
 import LimitUp from './pages/limit-up/LimitUp'
 import Emotional from './pages/emotional-cycle/Emotional'
 import PlateRotation from './pages/plate-rotation/PlateRotation'
 import WinnersList from './pages/winners-list/WinnersList'
 import DragonTotem from './pages/dragon-totem/DragonTotem'
 import TimeSharing from './pages/time-sharing/TimeSharing'
+
 export default createBrowserRouter([
   {
     path: '/',
     element: <Index />,
     children: [
       {
-        path: '/zt',
+        path: '/limit-up',
         element: <LimitUp />
       },
       {
@@ -22,23 +23,23 @@ export default createBrowserRouter([
         element: <LimitUp />
       },
       {
-        path: '/qxzqb',
+        path: '/emotional',
         element: <Emotional />
       },
       {
-        path: '/bk',
+        path: '/plate-rotation',
         element: <PlateRotation />
       },
       {
-        path: '/ltt',
+        path: '/dragon-totem',
         element: <DragonTotem />
       },
       {
-        path: '/lhb',
+        path: '/winners-list',
         element: <WinnersList />
       },
       {
-        path: '/fenshi',
+        path: '/time-sharing',
         element: <TimeSharing />
       }
     ]
