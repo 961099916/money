@@ -7,6 +7,7 @@ import Qxzqb from './pages/Qxzqb'
 import Bk from './pages/Bk'
 import Lhb from './pages/Lhb'
 import Ltt from './pages/Ltt'
+import Fenshi from './pages/Fenshi'
 export default createBrowserRouter([
   {
     path: '/',
@@ -35,6 +36,10 @@ export default createBrowserRouter([
       {
         path: '/lhb',
         element: <Lhb />
+      },
+      {
+        path: '/fenshi',
+        element: <Fenshi />
       }
     ]
   }

@@ -1,64 +1,45 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Col, Row, Table, Button, DatePicker, Tag, Popover, Badge } from '@douyinfe/semi-ui'
-import { IconRefresh } from '@douyinfe/semi-icons'
+import { IconRefresh, IconChevronLeft, IconChevronRight } from '@douyinfe/semi-icons'
+import COLOR from '../constant/ZtConstant'
 import moment from 'moment'
 import api from '../api/api'
 export default function Zt() {
   const [value, setValue] = useState([])
   const [time, setTime] = useState(moment().format('yyyy-MM-DD'))
-  const color = [
-    'amber',
-    'blue',
-    'cyan',
-    'green',
-    'grey',
-    'indigo',
-    'light-blue',
-    'light-green',
-    'lime',
-    'orange',
-    'pink',
-    'purple',
-    'red',
-    'teal',
-    'violet',
-    'yellow',
-    'white'
-  ]
   useEffect(() => {
     refresh()
   }, [])
   function onChangeTime(date, dateString) {
     setTime(dateString)
   }
-  function refresh() {
-    let dataStr = window.api.store.get(time)
-    console.log(dataStr)
+  function refresh(date) {
+    date = !date ? time : date
+    let dataStr = window.api.store.get(date)
     if (dataStr) {
-      const data = JSON.parse(dataStr)
-
-      setValue(data)
+      setValue(JSON.parse(dataStr))
     } else {
-      api.Xgb.jrzt(time).then((res) => {
+      api.Xgb.jrzt(date).then((res) => {
         if (res.data) {
           setValue(res.data)
-          window.api.store.set(time, JSON.stringify(data))
+          window.api.store.set(date, JSON.stringify(res.data))
         } else {
           setValue([])
         }
       })
     }
   }
+  function before() {
+    let date = moment(time, 'YYYY-MM-DD').subtract(1, 'days')
+    setTime(date.format('YYYY-MM-DD'))
+    refresh(date.format('YYYY-MM-DD'))
+  }
+  function next() {
+    let date = moment(time, 'YYYY-MM-DD').add(1, 'day')
+    setTime(date.format('YYYY-MM-DD'))
+    refresh(date.format('YYYY-MM-DD'))
+  }
   const columns = [
-    // {
-    //   title: '代码',
-    //   width: 120,
-    //   fixed: true,
-    //   dataIndex: 'symbol',
-    //   render: (text, record, index) => {
-    //     return text.slice(0, -3)
-    //   }
-    // },
     {
       title: '名称',
       width: 120,
@@ -118,14 +99,15 @@ export default function Zt() {
           children = (
             <Popover
               showArrow
+              margin={0}
               content={<article>{record.surge_reason.related_plates[0].plate_reason}</article>}
               position="top"
               key={index}
             >
               <Badge dot>
                 <Tag
-                  color={color[Number(record.m_days_n_boards_boards)]}
-                  key={color[Number(record.m_days_n_boards_boards)]}
+                  color={COLOR[Number(record.m_days_n_boards_boards)]}
+                  key={COLOR[Number(record.m_days_n_boards_boards)]}
                 >
                   {record.surge_reason.related_plates[0].plate_name}
                 </Tag>
@@ -135,15 +117,14 @@ export default function Zt() {
         } else {
           children = (
             <Tag
-              color={color[Number(record.m_days_n_boards_boards)]}
-              key={color[Number(record.m_days_n_boards_boards)]}
+              color={COLOR[Number(record.m_days_n_boards_boards)]}
+              key={COLOR[Number(record.m_days_n_boards_boards)]}
             >
               {record.surge_reason.related_plates[0].plate_name}
             </Tag>
           )
         }
         renderObject.children = children
-
         return renderObject
       }
     },
@@ -154,7 +135,6 @@ export default function Zt() {
       ellipsis: true
     }
   ]
-  const scroll = useMemo(() => ({ y: '80vh' }), [])
   const handleRow = (record, index) => {
     // 给偶数行设置斑马纹
     if (index % 2 === 0) {
@@ -171,15 +151,29 @@ export default function Zt() {
     <div style={{ padding: 4 }}>
       <Row>
         <Col span={3} style={{ padding: 1 }}>
-          <DatePicker defaultValue={new Date()} onChange={onChangeTime} />
+          <DatePicker value={time} onChange={onChangeTime} />
         </Col>
-        <Col offset={4}>
+        <Col offset={3}>
+          <Button
+            icon={<IconChevronLeft />}
+            theme="solid"
+            style={{ marginRight: 10 }}
+            aria-label="前一天"
+            onClick={before}
+          />
+          <Button
+            icon={<IconChevronRight />}
+            theme="solid"
+            style={{ marginRight: 10 }}
+            aria-label="后一天"
+            onClick={next}
+          />
           <Button
             icon={<IconRefresh />}
             theme="solid"
             style={{ marginRight: 10 }}
             aria-label="刷新"
-            onClick={refresh}
+            onClick={() => refresh()}
           />
         </Col>
       </Row>
@@ -189,7 +183,7 @@ export default function Zt() {
           dataSource={value}
           pagination={false}
           onRow={handleRow}
-          scroll={scroll}
+          scroll={() => useMemo(() => ({ y: '80vh' }), [])}
         />
       </Row>
     </div>

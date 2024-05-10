@@ -1,16 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { VChart } from '@visactor/react-vchart'
-import {
-  Layout,
-  Nav,
-  Button,
-  Breadcrumb,
-  Skeleton,
-  Avatar,
-  Table,
-  Radio,
-  RadioGroup
-} from '@douyinfe/semi-ui'
+import { Layout, Nav } from '@douyinfe/semi-ui'
 import {
   IconBytedanceLogo,
   IconGridView1,
@@ -26,11 +16,10 @@ export function Index() {
   const { Header, Sider, Content } = Layout
 
   return (
-    <Layout style={{ border: '0px solid var(--semi-color-border)', height: '100vh' }}>
+    <Layout style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
       <Header
         style={{
-          backgroundColor: 'var(--semi-color-bg-1)',
-          border: '0px solid var(--semi-color-border)',
+          width: '100vw',
           height: '10vh'
         }}
       >
@@ -40,7 +29,8 @@ export function Index() {
         <Sider
           style={{
             backgroundColor: 'var(--semi-color-bg-1)',
-            border: '1px solid var(--semi-color-border)'
+            border: '1px solid var(--semi-color-border)',
+            height: '90vh'
           }}
         >
           <Nav
@@ -52,11 +42,16 @@ export function Index() {
               )
             }}
             defaultSelectedKeys={['zt']}
-            style={{ maxWidth: 220, height: '100%' }}
+            style={{ maxWidth: 220, height: '90vh' }}
             items={[
               {
                 itemKey: 'zt',
                 text: '涨停',
+                icon: <IconMinus size="large" />
+              },
+              {
+                itemKey: 'fenshi',
+                text: '涨停分时',
                 icon: <IconMinus size="large" />
               },
               {
@@ -89,7 +84,7 @@ export function Index() {
             }}
           />
         </Sider>
-        <Content style={{ backgroundColor: 'var(--semi-color-bg-1)', height: '100%'}}>
+        <Content style={{ backgroundColor: 'var(--semi-color-bg-1)', height: '90vh' }}>
           <Outlet></Outlet>
         </Content>
       </Layout>

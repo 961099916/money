@@ -3,8 +3,21 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import moment from 'moment'
-import Store from 'electron-store'
-const store = new Store()
+import sqlite3 from 'sqlite3'
+
+console.log('连接数据库路径：', app.getAppPath(), '/text.db')
+var db = new sqlite3.Database(join(app.getAppPath(), '/text.db'), (err) => {
+  if (err) {
+    console.error('连接数据库错误：' + err.message)
+  }
+  console.log('连接数据库成功')
+})
+//创建用户表
+db.serialize(function () {
+  db.run(
+    'create table if not exists user (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, email text, phone text);'
+  )
+})
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({

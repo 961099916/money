@@ -10,6 +10,9 @@
 #root{
      max-height: 100vh;
      max-width: 100vw;
-     text-overflow:ellipsis;
+    text-overflow:ellipsis;
     overflow: hidden;
+}
+body{
+  overflow: hidden;
 }
