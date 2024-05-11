@@ -8,30 +8,27 @@ export default function LimitUp() {
   const [value, setValue] = useState([])
   const [time, setTime] = useState(moment().format('yyyy-MM-DD'))
   useEffect(() => {
-    refresh()
+    refresh(moment().format('yyyy-MM-DD'))
   }, [])
-  function onChangeTime(date, dateString) {
-    setTime(dateString)
+  async function onChangeTime(date, dateString) {
+    refresh(dateString)
   }
-  function refresh(date) {
+  async function refresh(date) {
     date = !date ? time : date
-    api.Xgb.jrzt(date).then((res) => {
-      if (res.data) {
-        setValue(res.data)
-        window.api.store.set(date, JSON.stringify(res.data))
-      } else {
-        setValue([])
-      }
-    })
+    setTime(date)
+    let data = await window.api.LimitUp({ type: 'day', date: date })
+    if (data) {
+      setValue(data)
+    } else {
+      setValue([])
+    }
   }
   function before() {
     let date = moment(time, 'YYYY-MM-DD').subtract(1, 'days')
-    setTime(date.format('YYYY-MM-DD'))
     refresh(date.format('YYYY-MM-DD'))
   }
   function next() {
     let date = moment(time, 'YYYY-MM-DD').add(1, 'day')
-    setTime(date.format('YYYY-MM-DD'))
     refresh(date.format('YYYY-MM-DD'))
   }
   const columns = [

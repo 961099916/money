@@ -2,21 +2,18 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import sqlite3 from 'sqlite3'
-
-console.log('连接数据库路径：', app.getAppPath(), '/text.db')
-var db = new sqlite3.Database(join(app.getAppPath(), '/text.db'), (err) => {
-  if (err) {
-    console.error('连接数据库错误：' + err.message)
-  }
-  console.log('连接数据库成功')
-})
-//创建用户表
-db.serialize(function () {
-  db.run(
-    'create table if not exists user (id INTEGER PRIMARY KEY AUTOINCREMENT, name text, email text, phone text);'
-  )
-})
+import limitUpHook from './hook/LimitUpHook'
+import AnalyseHook from './hook/AnalyseHook'
+import DragonTotemHook from './hook/DragonTotemHook'
+import EmotionalCycleHook from './hook/EmotionalCycleHook'
+import PlateRotationHook from './hook/PlateRotationHook'
+import SettingsHook from './hook/SettingsHook'
+import TimeLineHook from './hook/TimeLineHook'
+import TimeSharingHook from './hook/TimeSharingHook'
+import WinnerListHook from './hook/WinnersListHook'
+import { init } from './init/InitSqlite'
+import LimitUpHook from './hook/LimitUpHook'
+init()
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -57,6 +54,15 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  ipcMain.handle('limit-up', LimitUpHook)
+  ipcMain.handle('analyse', AnalyseHook)
+  ipcMain.handle('dragon-totem', DragonTotemHook)
+  ipcMain.handle('emotional-cycle', EmotionalCycleHook)
+  ipcMain.handle('plate-rotation', PlateRotationHook)
+  ipcMain.handle('settings', SettingsHook)
+  ipcMain.handle('time-sharing', TimeSharingHook)
+  ipcMain.handle('timeline', TimeLineHook)
+  ipcMain.handle('winners-list', WinnerListHook)
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 

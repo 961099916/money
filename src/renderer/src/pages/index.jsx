@@ -13,7 +13,6 @@ import { Outlet } from 'react-router-dom/dist'
 import Titles from './analyse/Analyse'
 export default function Index() {
   const { Header, Sider, Content } = Layout
-
   return (
     <Layout style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
       <Header
@@ -71,6 +70,11 @@ export default function Index() {
               {
                 itemKey: 'winners-list',
                 text: '龙虎榜',
+                icon: <IconListView size="large" />
+              },
+              {
+                itemKey: 'settings',
+                text: '设置',
                 icon: <IconListView size="large" />
               }
             ]}
