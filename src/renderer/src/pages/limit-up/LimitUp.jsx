@@ -3,7 +3,6 @@ import { Col, Row, Table, Button, DatePicker, Tag, Popover, Badge } from '@douyi
 import { IconRefresh, IconChevronLeft, IconChevronRight } from '@douyinfe/semi-icons'
 import LIMIT_UP_COLOR from '../../constants/constant'
 import moment from 'moment'
-import api from '../../hook/api'
 export default function LimitUp() {
   const [value, setValue] = useState([])
   const [time, setTime] = useState(moment().format('yyyy-MM-DD'))
