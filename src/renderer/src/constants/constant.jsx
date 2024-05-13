@@ -17,6 +17,3 @@ export const LIMIT_UP_COLOR = [
   'yellow',
   'white'
 ]
-export default {
-  LIMIT_UP_COLOR
-}

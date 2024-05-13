@@ -1,106 +1,94 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Col, Row, Table, Button, DatePicker, Tag, Popover, Badge } from '@douyinfe/semi-ui'
+import { Col, Row, Table, Button, DatePicker, Tag, Popover, Badge, Tabs } from '@douyinfe/semi-ui'
 import { IconRefresh, IconChevronLeft, IconChevronRight } from '@douyinfe/semi-icons'
-import LIMIT_UP_COLOR from '../../constants/constant'
+import { LIMIT_UP_COLOR } from '../../constants/constant'
 import moment from 'moment'
+
 export default function LimitUp() {
   const [value, setValue] = useState([])
+  const [table, setTable] = useState([])
+  const [index, setIndex] = useState('1')
   const [time, setTime] = useState(moment().format('yyyy-MM-DD'))
   useEffect(() => {
     refresh(moment().format('yyyy-MM-DD'))
   }, [])
-  async function onChangeTime(date, dateString) {
-    refresh(dateString)
-  }
   async function refresh(date) {
     date = !date ? time : date
     setTime(date)
     let data = await window.api.LimitUp({ type: 'day', date: date })
-    if (data) {
-      setValue(data)
-    } else {
-      setValue([])
-    }
+    console.log(data)
+    data ? setValue(data) : setValue([])
+    data ? setTable(data) : setTable([])
+    setIndex('1')
   }
-  function before() {
-    let date = moment(time, 'YYYY-MM-DD').subtract(1, 'days')
-    refresh(date.format('YYYY-MM-DD'))
-  }
-  function next() {
-    let date = moment(time, 'YYYY-MM-DD').add(1, 'day')
-    refresh(date.format('YYYY-MM-DD'))
-  }
+
+  const tabList = [
+    { tab: '今日涨停', itemKey: '1' },
+    { tab: '首板', itemKey: '2' },
+    { tab: '二板', itemKey: '3' },
+    { tab: '三板', itemKey: '4' },
+    { tab: '更高板', itemKey: '5' }
+  ]
+
   const columns = [
     {
       title: '名称',
       width: 120,
       fixed: true,
-      dataIndex: 'stock_chi_name'
+      dataIndex: 'name'
     },
     {
       title: '首次涨停时间',
       width: 200,
-      render: (text, record, index) => {
-        return moment.unix(record.first_limit_up).format('yyyy-MM-DD HH:mm:ss')
-      }
+      dataIndex: 'first_limit_up'
     },
     {
       title: '最后一次涨停时间',
       width: 200,
-      render: (text, record, index) => {
-        return moment.unix(record.last_limit_up).format('yyyy-MM-DD HH:mm:ss')
-      }
+      dataIndex: 'last_limit_up'
     },
     {
       title: '流通市值',
       width: 120,
-      render: (text, record, index) => {
-        return Math.round(record.non_restricted_capital / 1000000) / 100 + '亿'
-      }
+      dataIndex: 'non_restricted_capital'
     },
     {
       title: '换手率',
       width: 120,
-      render: (text, record, index) => {
-        return Math.round(record.turnover_ratio * 10000) / 100 + '%'
-      }
+      dataIndex: 'turnover_ratio'
     },
     {
       title: '连板',
       width: 120,
-      dataIndex: 'm_days_n_boards_boards',
-      sorter: (a, b) => Number(a.m_days_n_boards_boards) - Number(b.m_days_n_boards_boards),
-      render: (text, record, index) => {
-        return record.m_days_n_boards_boards === 0 ? '首板' : record.m_days_n_boards_boards + '连板'
-      }
+      sorter: (a, b) => Number(a.limit_up_days) - Number(b.limit_up_days),
+      dataIndex: 'limit_up_days'
     },
     {
       title: '涨停原因',
       width: 120,
-      dataIndex: 'break_limit_down_times',
       sorter: (a, b) =>
         new Intl.Collator('zh-Hans-CN', { sensitivity: 'accent' }).compare(
-          a.surge_reason.related_plates[0].plate_reason,
-          b.surge_reason.related_plates[0].plate_reason
+          a.related_plates_name,
+          b.related_plates_name
         ),
       render: (text, record, index) => {
         const renderObject = {}
         let children = null
-        if (record.surge_reason.related_plates[0].plate_reason) {
+        if (record.related_plates_reason) {
           children = (
             <Popover
               showArrow
               margin={0}
-              content={<article>{record.surge_reason.related_plates[0].plate_reason}</article>}
+              content={<article>{record.related_plates_reason}</article>}
               position="top"
               key={index}
             >
               <Badge dot>
                 <Tag
-                  color={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
-                  key={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
+                  color={LIMIT_UP_COLOR[record.limit_up_days]}
+                  key={LIMIT_UP_COLOR[record.limit_up_days]}
                 >
-                  {record.surge_reason.related_plates[0].plate_name}
+                  {record.related_plates_name}
                 </Tag>
               </Badge>
             </Popover>
@@ -108,10 +96,10 @@ export default function LimitUp() {
         } else {
           children = (
             <Tag
-              color={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
-              key={LIMIT_UP_COLOR[Number(record.m_days_n_boards_boards)]}
+              color={LIMIT_UP_COLOR[record.limit_up_days]}
+              key={LIMIT_UP_COLOR[record.limit_up_days]}
             >
-              {record.surge_reason.related_plates[0].plate_name}
+              {record.related_plates_name}
             </Tag>
           )
         }
@@ -122,27 +110,15 @@ export default function LimitUp() {
     {
       title: '原因',
       width: 120,
-      dataIndex: 'surge_reason.stock_reason',
+      dataIndex: 'stock_reason',
       ellipsis: true
     }
   ]
-  const handleRow = (record, index) => {
-    // 给偶数行设置斑马纹
-    if (index % 2 === 0) {
-      return {
-        style: {
-          background: 'var(--semi-color-fill-0)'
-        }
-      }
-    } else {
-      return {}
-    }
-  }
   return (
     <div style={{ padding: 4 }}>
       <Row>
         <Col span={3} style={{ padding: 1 }}>
-          <DatePicker value={time} onChange={onChangeTime} />
+          <DatePicker value={time} onChange={(date, dateString) => refresh(dateString)} />
         </Col>
         <Col offset={3}>
           <Button
@@ -150,14 +126,18 @@ export default function LimitUp() {
             theme="solid"
             style={{ marginRight: 10 }}
             aria-label="前一天"
-            onClick={before}
+            onClick={() => {
+              refresh(moment(time, 'YYYY-MM-DD').add(-1, 'days').format('yyyy-MM-DD'))
+            }}
           />
           <Button
             icon={<IconChevronRight />}
             theme="solid"
             style={{ marginRight: 10 }}
             aria-label="后一天"
-            onClick={next}
+            onClick={() => {
+              refresh(moment(time, 'YYYY-MM-DD').add(1, 'days').format('yyyy-MM-DD'))
+            }}
           />
           <Button
             icon={<IconRefresh />}
@@ -169,13 +149,33 @@ export default function LimitUp() {
         </Col>
       </Row>
       <Row>
-        <Table
-          columns={columns}
-          dataSource={value}
-          pagination={false}
-          onRow={handleRow}
-          scroll={() => useMemo(() => ({ y: '80vh' }), [])}
-        />
+        <Tabs
+          type="card"
+          activeKey={index}
+          tabList={tabList}
+          onChange={(key) => {
+            setIndex(key)
+            switch (key) {
+              case '1':
+                return setTable(value)
+              case '2':
+                return setTable(value.filter((o) => o.limit_up_days == 1))
+              case '3':
+                return setTable(value.filter((o) => o.limit_up_days == 2))
+              case '4':
+                return setTable(value.filter((o) => o.limit_up_days == 3))
+              case '5':
+                return setTable(value.filter((o) => o.limit_up_days > 3))
+            }
+          }}
+        >
+          <Table
+            columns={columns}
+            dataSource={table}
+            pagination={false}
+            scroll={() => useMemo(() => ({ y: '80vh' }), [])}
+          />
+        </Tabs>
       </Row>
     </div>
   )

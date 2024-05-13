@@ -2,7 +2,6 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import limitUpHook from './hook/LimitUpHook'
 import AnalyseHook from './hook/AnalyseHook'
 import DragonTotemHook from './hook/DragonTotemHook'
 import EmotionalCycleHook from './hook/EmotionalCycleHook'
@@ -13,7 +12,9 @@ import TimeSharingHook from './hook/TimeSharingHook'
 import WinnerListHook from './hook/WinnersListHook'
 import { init } from './init/InitSqlite'
 import LimitUpHook from './hook/LimitUpHook'
+
 init()
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({

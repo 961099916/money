@@ -3,14 +3,14 @@ import { electronAPI } from '@electron-toolkit/preload'
 // Custom APIs for renderer
 const api = {
   LimitUp: (data) => ipcRenderer.invoke('limit-up', data),
-  AnalyseHook: (data) => ipcRenderer.invoke('analyse', data),
-  LiDragonTotemHookmitUp: (data) => ipcRenderer.invoke('dragon-totem', data),
-  EmotionalCycleHook: (data) => ipcRenderer.invoke('emotional-cycle', data),
-  PlateRotationHook: (data) => ipcRenderer.invoke('plate-rotation', data),
-  SettingsHook: (data) => ipcRenderer.invoke('settings', data),
-  TimeSharingHook: (data) => ipcRenderer.invoke('time-sharing', data),
-  TimeLineHook: (data) => ipcRenderer.invoke('timeline', data),
-  WinnerListHook: (data) => ipcRenderer.invoke('winners-list', data)
+  Analyse: (data) => ipcRenderer.invoke('analyse', data),
+  LiDragonTotemmitUp: (data) => ipcRenderer.invoke('dragon-totem', data),
+  EmotionalCycle: (data) => ipcRenderer.invoke('emotional-cycle', data),
+  PlateRotation: (data) => ipcRenderer.invoke('plate-rotation', data),
+  Settings: (data) => ipcRenderer.invoke('settings', data),
+  TimeSharing: async (data) => await ipcRenderer.invoke('time-sharing', data),
+  TimeLine: (data) => ipcRenderer.invoke('timeline', data),
+  WinnerList: (data) => ipcRenderer.invoke('winners-list', data)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
