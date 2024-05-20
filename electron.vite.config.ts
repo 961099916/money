@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
 import renderer from 'vite-plugin-electron-renderer'
+
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()]
@@ -19,8 +20,6 @@ export default defineConfig({
       react(),
       renderer({
         resolve: {
-          // JavaScript cjs lib
-          sqlite3: { type: 'cjs' }
         }
       })
     ]
