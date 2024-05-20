@@ -52,7 +52,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-    "sqlite3": "^5.1.7",
     "typescript": "^5.3.3",
     "vite": "^5.0.12",
     "vite-plugin-electron-renderer": "^0.14.5"

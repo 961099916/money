@@ -1,19 +1,7 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import AnalyseHook from './hook/AnalyseHook'
-import DragonTotemHook from './hook/DragonTotemHook'
-import EmotionalCycleHook from './hook/EmotionalCycleHook'
-import PlateRotationHook from './hook/PlateRotationHook'
-import SettingsHook from './hook/SettingsHook'
-import TimeLineHook from './hook/TimeLineHook'
-import TimeSharingHook from './hook/TimeSharingHook'
-import WinnerListHook from './hook/WinnersListHook'
-import { init } from './init/InitSqlite'
-import LimitUpHook from './hook/LimitUpHook'
-
-init()
 
 function createWindow(): void {
   // Create the browser window.
@@ -55,15 +43,6 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  ipcMain.handle('limit-up', LimitUpHook)
-  ipcMain.handle('analyse', AnalyseHook)
-  ipcMain.handle('dragon-totem', DragonTotemHook)
-  ipcMain.handle('emotional-cycle', EmotionalCycleHook)
-  ipcMain.handle('plate-rotation', PlateRotationHook)
-  ipcMain.handle('settings', SettingsHook)
-  ipcMain.handle('time-sharing', TimeSharingHook)
-  ipcMain.handle('timeline', TimeLineHook)
-  ipcMain.handle('winners-list', WinnerListHook)
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
