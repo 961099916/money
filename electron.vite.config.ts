@@ -20,7 +20,7 @@ export default defineConfig({
       renderer({
         resolve: {
           // JavaScript cjs lib
-          'sqlite3': { type: 'cjs' }
+          sqlite3: { type: 'cjs' }
         }
       })
     ]

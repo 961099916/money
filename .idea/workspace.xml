@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="362f6d73-518d-4186-ac9b-cf2ed4b40b45" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/money.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/AnalyseHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/DragonTotemHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/EmotionalCycleHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/LimitUpHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/PlateRotationHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/SettingsHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/TimeLineHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/TimeSharingHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/WinnersListHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/external/RequestHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/hook/external/SqliteHook.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/init/InitSqlite.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preload/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/preload/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/pages/Index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electron.vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/electron.vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/src/main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/src/pages/Index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/pages/Index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/src/pages/settings/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/pages/settings/Settings.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +81,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1686799836744</updated>
-      <workItem from="1716192366501" duration="327000" />
+      <workItem from="1716192366501" duration="587000" />
     </task>
     <servers />
   </component>
